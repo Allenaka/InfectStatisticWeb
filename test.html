@@ -136,6 +136,66 @@
                 }
             }
         }
+        getPyName();
+
+        var myChart2 = echarts.init(document.getElementById('line'));
+        option2 = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['新增确诊', '累计确诊', '新增疑似', '累计治愈', '累计死亡']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: []
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '新增确诊',
+                    type: 'line',
+                    data: []
+                },
+                {
+                    name: '累计确诊',
+                    type: 'line',
+                    data: []
+                },
+                {
+                    name: '新增疑似',
+                    type: 'line',
+                    data: []
+                },
+                {
+                    name: '累计治愈',
+                    type: 'line',
+                    data: []
+                },
+                {
+                    name: '累计死亡',
+                    type: 'line',
+                    data: []
+                }
+                
+            ]
+        };
+
+        myChart2.setOption(option2);
     </script>
 </body>
 </html>
