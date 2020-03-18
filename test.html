@@ -67,5 +67,13 @@
 
     </div>
     
+    <script type="text/javascript">
+
+        var afterUrl =  window.location.search.substring(1);
+        // encodeURI(afterUrl);
+        var afterEqual = afterUrl.substring(afterUrl.indexOf('=')+1); 
+        var cityName = decodeURI(afterEqual);
+        document.getElementById("province").innerText = cityName;
+    </script>
 </body>
 </html>
