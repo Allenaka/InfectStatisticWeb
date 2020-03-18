@@ -250,6 +250,13 @@
             ]
         };
 
+        myChart.on('click', function (param) {
+            // 城市中文名
+            var cityName = encodeURI(param.name);
+            window.open("test.html?cityName=" + cityName, "_self");
+
+        });
+
         document.getElementById('effected').onclick = function () {
             document.getElementById('map').style.display = "block";
             document.getElementById('map2').style.display = "none";
@@ -261,6 +268,13 @@
             document.getElementById('map').style.display = "none";
             this.className = "focus";
             document.getElementById('effected').className = "unfocus";
+            var myChart2 = echarts.init(document.getElementById('map2'));
+            myChart2.setOption(option2);
+            getCurrData(myChart2);
+            myChart2.on('click', function (param) {
+            // 城市中文名
+            var cityName = encodeURI(param.name);
+            window.open("test.html?cityName=" + cityName, "_self");
         };
 
         function getCurrData(params) {
