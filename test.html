@@ -196,6 +196,133 @@
         };
 
         myChart2.setOption(option2);
+
+        function getCurrData(params) {
+        $.ajax({
+            url: "https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5",
+            dataType: "jsonp",
+            success: function (data) {
+            console.log(data.data)
+            var res = data.data || "";
+            res = JSON.parse(res);
+            var newArr = [];
+            var currEffected, dead, cure, totalEffected;
+            var addCurrEffected, addDead, addCure, addTotalEffected;
+            
+            if (res) {
+                
+                
+                //获取到各个省份及其市级县的数据
+                for (var k = 0; k < res.areaTree[0].children.length; k++) {
+                    if (res.areaTree[0].children[k].name == cityName) {
+                        currEffected = res.areaTree[0].children[k].total.confirm - res.areaTree[0].children[k].total.dead - res.areaTree[0].children[k].total.heal;
+                        totalEffected = res.areaTree[0].children[k].total.confirm;
+                        cure = res.areaTree[0].children[k].total.heal;
+                        dead = res.areaTree[0].children[k].total.dead;
+                        addCurrEffected = res.areaTree[0].children[k].today.confirm;
+                        addCure = res.areaTree[0].children[k].today.confirmCuts;
+                        document.getElementById("nowConfirm").innerText = currEffected;
+                        document.getElementById("totalConfirm").innerText = totalEffected;
+                        document.getElementById("cure").innerText = cure;
+                        document.getElementById("dead").innerText = dead;
+                        document.getElementById("addCurr").innerText = addCurrEffected;
+                        document.getElementById("addTotal").innerText = addCurrEffected;
+                        document.getElementById("addCure").innerText = addCure;
+                    }
+                    
+                    var city = res.areaTree[0].children[k].children;
+                    for (var i = 0; i < city.length; i++) {
+                    var json = {
+                        name: city[i].name,
+                        value: city[i].total.confirm - city[i].total.dead - city[i].total.heal
+                    }
+                    
+                    newArr.push(json);
+
+                    }
+                    // console.log(newArr)
+                    // console.log(JSON.stringify(newArr))
+                    //使用指定的配置项和数据显示图表
+                    if (params == myChart) {
+                        params.setOption({
+                        series: [
+                            {
+                            
+                            data: newArr
+                            }
+                        ]
+                        });
+                    }
+                }
+            }
+            }
+
+        })
+    }
+            
+    getCurrData(myChart);
+    
+    function lineData() {
+        var url = "http://www.dzyong.top:3005/yiqing/history";/*json文件url，本地的就写本地的位置，如果是服务器的就写服务器的路径*/
+            var request = new XMLHttpRequest();
+            request.open("get", url);/*设置请求方法与路径*/
+            request.send(null);/*不发送数据到服务器*/
+            request.onload = function () {/*XHR对象获取到返回信息后执行*/
+                if (request.status == 200) {/*返回状态为200，即为数据获取成功*/
+                    var res = JSON.parse(request.responseText);
+                    var xline = [], increase = [], total = [], suspected = [], cure = [], dead = [];
+                    for(var i=0; i<res.data.length; i++){
+                        xline[i] = res.data[i].date;
+                        if (i != 0) {
+                            increase[i] = res.data[i].confirmedNum - res.data[i-1].confirmedNum;
+                            suspected[i] = res.data[i].suspectedNum - res.data[i-1].suspectedNum;
+                            if (suspected[i] < 0) {
+                                suspected[i] = 0;
+                            }
+                        }
+                        else {
+                            increase[i] = res.data[0].confirmedNum;
+                            suspected[i] = res.data[0].suspectedNum;
+                        }
+                        cure[i] = res.data[i].curesNum;
+                        dead[i] = res.data[i].deathsNum
+                        total[i] = res.data[i].confirmedNum;
+                    }
+                    console.log(total);
+                    myChart2.setOption({
+                        xAxis: {
+                            data: xline
+                        },
+                        series: [
+                            {
+                                name: '新增确诊',
+                                data: increase
+                            },
+                            {
+                                name: '累计确诊',
+                                data: total
+                            },
+                            {
+                                name: '新增疑似',
+                                data: suspected
+                            },
+                            {
+                                name: '累计治愈',
+                                data: cure
+                            },
+                            {
+                                name: '累计死亡',
+                                data: dead
+                            }
+                            
+                        ]
+
+                    })
+                }
+            }
+    }
+
+    lineData();
     </script>
 </body>
 </html>
