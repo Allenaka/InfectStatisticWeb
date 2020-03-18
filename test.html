@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/details.css">
+    <script type="text/javascript" src="https://www.echartsjs.com/examples/vendors/echarts/echarts.min.js?_v_=1578305236132"></script>
+    <script type="text/javascript" src="js/china.js" charset="utf-8"></script>
+    <script src="https://www.echartsjs.com/examples/vendors/jquery/jquery.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            
+            <div id="btn-back">返回疫情动态</div>
+            <div id="title">
+                <span>新冠肺炎</span>
+                <span id="province">NaN</span>
+                <span>疫情实时动态</span>
+            </div>
+
+            <div class="online">
+                <p class="numOnline">2,494,262,426 人次已浏览</p>
+            </div>
+        </nav>
+    </header>
+    <div id="map"></div>
+    <div style="width:100%; background-color: rgb(0, 0, 0); padding:40px 0;">
+        <div id="data">
+            <div class = type>
+                <p>现有确诊</p>
+                <p id="nowConfirm">54927</p>
+                <p>
+                    <span>昨日+</span>
+                    <span id="addCurr">1336</span>
+                </p>
+            </div>
+            <div class = type>
+                <p>累计确诊</p>
+                <p id="totalConfirm">54927</p>
+                <p>
+                    <span>昨日+</span>
+                    <span id="addTotal">1336</span>
+                </p>
+            </div>
+            <div class = type>
+                <p>累计治愈</p>
+                <p id="cure">54927</p>
+                <p>
+                    <span>昨日+</span>
+                    <span id="addCure">1336</span>
+                </p>
+            </div>
+            <div class = type>
+                <p>累计死亡</p>
+                <p id="dead">54927</p>
+                <p>
+                    <span>昨日+</span>
+                    <span id="addDead">0</span>
+                </p>
+            </div>
+        </div>
+
+        <div id="line" style="width: 90%; height: 500px; margin: 0 auto; margin-top: 40px; background-color:whitesmoke; border-radius: 20px;"></div>
+
+    </div>
+    
+</body>
+</html>
