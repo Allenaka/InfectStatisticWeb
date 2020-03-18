@@ -126,6 +126,16 @@
                 myChart.setOption(cityOption);
             });
         }
+        function getPyName() {       
+            for(var i=0,len=cityArr[0].length;i<len;i++){
+                console.log(cityName);
+                if(cityName==cityArr[0][i]){
+                    // 获取得城市拼音  
+                    showCity(cityArr[0][i], cityArr[1][i]);
+                    
+                }
+            }
+        }
     </script>
 </body>
 </html>
