@@ -249,6 +249,19 @@
                 }
             ]
         };
+
+        document.getElementById('effected').onclick = function () {
+            document.getElementById('map').style.display = "block";
+            document.getElementById('map2').style.display = "none";
+            this.className = "focus";
+            document.getElementById('totalEffected').className = "unfocus";
+        };
+        document.getElementById('totalEffected').onclick = function () {
+            document.getElementById('map2').style.display = "block";
+            document.getElementById('map').style.display = "none";
+            this.className = "focus";
+            document.getElementById('effected').className = "unfocus";
+        };    
     </script>
     
     
