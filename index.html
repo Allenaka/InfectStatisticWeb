@@ -261,7 +261,107 @@
             document.getElementById('map').style.display = "none";
             this.className = "focus";
             document.getElementById('effected').className = "unfocus";
-        };    
+        };
+
+        function getCurrData(params) {
+        $.ajax({
+            url: "https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5",
+            dataType: "jsonp",
+            success: function (data) {
+            console.log(data.data)
+            var res = data.data || "";
+            res = JSON.parse(res);
+            var newArr = [], newArr2 = [];
+            var currEffected, suspected, dead, cure, totalEffected, imported;
+            var addCurrEffected, addSuspected, addDead, addCure, addTotalEffected, addImported;
+            
+            if (res) {
+                
+                totalEffected = res.chinaTotal.confirm;
+                suspected = res.chinaTotal.suspect;
+                cure = res.chinaTotal.heal;
+                dead = res.chinaTotal.dead;
+                currEffected = res.chinaTotal.nowConfirm;
+                imported = res.chinaTotal.importedCase;
+                addCurrEffected = res.chinaAdd.nowConfirm;
+                addSuspected = res.chinaAdd.suspect;
+                addCure = res.chinaAdd.heal;
+                addDead = res.chinaAdd.dead;
+                addImported = res.chinaAdd.importedCase;
+                addTotalEffected = res.chinaAdd.confirm;
+
+
+                document.getElementById("confirm").innerText = totalEffected;
+                document.getElementById("nowConfirm").innerText = currEffected;
+                document.getElementById("cure").innerText = cure;
+                document.getElementById("dead").innerText = dead;
+                document.getElementById("suspected").innerText = suspected;
+                document.getElementById("importCase").innerText = imported;
+                document.getElementById("addCurr").innerText = addCurrEffected;
+                document.getElementById("addTotal").innerText = addTotalEffected;
+                document.getElementById("addCure").innerText = addCure;
+                document.getElementById("addDead").innerText = addDead;
+                document.getElementById("addImported").innerText = addImported;
+                document.getElementById("addSuspected").innerText = addSuspected;
+                
+                //获取到各个省份的数据
+                var province = res.areaTree[0].children;
+                for (var i = 0; i < province.length; i++) {
+                var json = {
+                    name: province[i].name,
+                    value: province[i].total.confirm - province[i].total.dead - province[i].total.heal
+                }
+                var json2 = {
+                    name: province[i].name,
+                    value: province[i].total.confirm
+                }
+                newArr.push(json);
+                newArr2.push(json2);
+                }
+                // console.log(newArr)
+                // console.log(JSON.stringify(newArr))
+                //使用指定的配置项和数据显示图表
+                if (params == myChart) {
+                    params.setOption({
+                    series: [
+                        {
+                        name: '现存确诊数',
+                        type: 'map',
+                        mapType: 'china',
+                        roam: false,
+                        label: {
+                            show: true,
+                            color: 'rgb(249, 249, 249)'
+                        },
+                        data: newArr
+                        }
+                    ]
+                    });
+                }
+                else {
+                    params.setOption({
+                    series: [
+                        {
+                        name: '累计确诊数',
+                        type: 'map',
+                        mapType: 'china',
+                        roam: false,
+                        label: {
+                            show: true,
+                            color: 'rgb(249, 249, 249)'
+                        },
+                        data: newArr2
+                        }
+                    ]
+                    });
+                }
+            }
+            }
+
+        })
+    }
+    
+    getCurrData(myChart);    
     </script>
     
     
