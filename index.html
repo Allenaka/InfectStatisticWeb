@@ -143,6 +143,28 @@
         <div id="map2"></div>
     </div>
 
+    <div id="report">
+        <p>疫情报告</p>
+        <div id="report1" class="bar">
+            <div class="tag">
+                <p>VOL.30</p>
+            </div>
+            <div class="title">
+                <p>心系湖北，放眼世界 | 2020.02.30</p>
+                <p>47个国家，8万多确诊</p>
+            </div>          
+        </div>
+        <div id="report2" class="bar">
+            <div class="tag">
+                <p>VOL.29</p>
+            </div>
+            <div class="title">
+                <p>这场战“疫”还未结束 | 2020.02.29</p>
+                <p>湖北以外新增病例出现反弹</p>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
         var myChart = echarts.init(document.getElementById('map'));
         option = {
@@ -378,7 +400,16 @@
         })
     }
     
-    getCurrData(myChart);    
+    getCurrData(myChart);  
+    document.getElementById("news").onclick = function () {
+        window.open("https://wechat.dxy.cn/news/view?noshare=false&watermark=false&nocopy=false&email=false&simuri=%2Fjapi%2Fweixin%2Fnews%2F43775%2FsuPrXgtcrpPbM%2Fdata&teamId=222");
+    }
+    document.getElementById("report1").onclick = function () {
+        window.open("https://mama.dxy.com/outbreak/daily-of-nationwide-new?index=20200227&locationIds=999&from=todh5");
+    }
+    document.getElementById("report2").onclick = function () {
+        window.open("https://mama.dxy.com/outbreak/daily-of-nationwide-new?index=20200228&locationIds=999&from=todh5");
+    }  
     </script>
     
     
